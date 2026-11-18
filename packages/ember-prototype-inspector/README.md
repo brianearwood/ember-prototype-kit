@@ -6,6 +6,8 @@ Inspect Mode for Ember prototypes. Click any rendered element to see:
 - the full invocation, including authored `@arguments`
 - rendered component properties and icons
 - the design tokens, typography, spacing and dimensions applied to it
+  (typography is read from the descendant that renders the text, such as
+  `.hds-button__text`, when the selected element has no text of its own)
 - a link to the component's documentation
 - reviewer guidance written by the prototype author
 
@@ -28,6 +30,9 @@ The package has two parts:
   `babel-plugin-ember-template-compilation` (tested with 3.x and 4.x)
 - `@hashicorp/design-system-components` 6.5 or 7.x (the panel UI uses HDS)
 - Node 20.19 or later
+
+The addon imports `@glimmer/tracking` from ember-source. Apps don't need a
+direct `@glimmer/tracking` dependency.
 
 ## Install
 

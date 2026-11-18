@@ -327,9 +327,21 @@ export default class InspectMode extends Component<InspectModeSignature> {
 
             <section class="inspect-section">
               <h3>Typography</h3>
+              {{#if this.selectedTarget.typographySource}}
+                <p
+                  class="inspect-section-hint"
+                  data-test-inspect-typography-source
+                >
+                  Read from
+                  <code>{{this.selectedTarget.typographySource}}</code>
+                </p>
+              {{/if}}
               <dl class="inspect-detail-list">
                 {{#each this.selectedTarget.typography as |detail|}}
-                  <div class="inspect-detail-row">
+                  <div
+                    class="inspect-detail-row"
+                    data-test-inspect-typography={{detail.label}}
+                  >
                     <dt>{{detail.label}}</dt>
                     <dd>
                       <code>{{detail.value}}</code>

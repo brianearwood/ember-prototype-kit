@@ -70,6 +70,46 @@ module('Acceptance | inspect mode', function (hooks) {
     assert.dom(PANEL).includesText('Spacing and dimensions');
   });
 
+  test('reads typography from the element that renders the text', async function (assert) {
+    await visit('/?inspect=true');
+
+    const button = document.querySelector<HTMLElement>('[data-test-primary]')!;
+    const text = button.querySelector<HTMLElement>('.hds-button__text')!;
+    const textStyle = getComputedStyle(text);
+
+    assert.notStrictEqual(
+      getComputedStyle(button).fontSize,
+      textStyle.fontSize,
+      'the button and its text have different font sizes',
+    );
+
+    await click('[data-test-primary]');
+
+    assert
+      .dom('[data-test-inspect-typography-source]')
+      .hasText('Read from span.hds-button__text');
+    assert
+      .dom('[data-test-inspect-typography="Font size"] dd code')
+      .hasText(textStyle.fontSize);
+    assert
+      .dom('[data-test-inspect-typography="Font weight"] dd code')
+      .hasText(textStyle.fontWeight);
+  });
+
+  test('reads typography from the selected element when it holds text', async function (assert) {
+    await visit('/?inspect=true');
+
+    await click('[data-test-demo-card] h2');
+
+    assert.dom('[data-test-inspect-typography-source]').doesNotExist();
+    assert
+      .dom('[data-test-inspect-typography="Font size"] dd code')
+      .hasText(
+        getComputedStyle(document.querySelector('[data-test-demo-card] h2')!)
+          .fontSize,
+      );
+  });
+
   test('shows guidance notes and ancestor breadcrumbs for local components', async function (assert) {
     await visit('/?inspect=true');
 

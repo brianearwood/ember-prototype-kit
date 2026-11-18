@@ -171,6 +171,17 @@
   color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
 }
 
+.inspect-section .inspect-section-hint {
+  margin: -4px 0 12px;
+}
+
+.inspect-section-hint code {
+  font-family: var(
+    --hds-typography-font-stack-code,
+    var(--token-typography-font-stack-code)
+  );
+}
+
 .inspect-note {
   margin-top: 20px;
   padding: 16px;

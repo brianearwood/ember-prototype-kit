@@ -51,6 +51,8 @@ export interface InspectTarget {
   source: string;
   tokens: TokenReference[];
   typography: InspectionValue[];
+  /** Describes the descendant typography was read from, when it isn't the selected element. */
+  typographySource: string | null;
 }
 
 function parseArguments(value: string | undefined): string[] {
@@ -448,6 +450,54 @@ function boxValue(
   return `${top} ${right} ${bottom} ${left}`;
 }
 
+const NON_TEXT_TAGS = new Set(['SCRIPT', 'STYLE', 'TEMPLATE', 'NOSCRIPT']);
+
+function hasOwnText(element: Element): boolean {
+  return Array.from(element.childNodes).some(
+    (node) =>
+      node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '',
+  );
+}
+
+/**
+ * Typography applies to text, which in many components (buttons, badges,
+ * links) is rendered by a descendant with its own styles. Returns the
+ * selected element when it holds text itself, otherwise the first visible
+ * descendant that does.
+ */
+export function textElementFor(element: HTMLElement): HTMLElement {
+  if (hasOwnText(element)) {
+    return element;
+  }
+
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+
+      if (
+        !parent ||
+        node.textContent?.trim() === '' ||
+        NON_TEXT_TAGS.has(parent.tagName) ||
+        parent.closest('svg, [data-inspect-ui]') ||
+        parent.getClientRects().length === 0
+      ) {
+        return NodeFilter.FILTER_REJECT;
+      }
+
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const parent = walker.nextNode()?.parentElement;
+
+  return parent instanceof HTMLElement ? parent : element;
+}
+
+function describeElement(element: HTMLElement): string {
+  const classes = Array.from(element.classList).slice(0, 2);
+
+  return [element.tagName.toLowerCase(), ...classes].join('.');
+}
+
 function typographyValues(
   element: HTMLElement,
   styleInspection: StyleInspection,
@@ -714,6 +764,7 @@ export function targetFromElement(
     ...renderedProperties(element, authored, component),
   ];
   const styleInspection = inspectStyles(element, options.tokenPrefixes);
+  const textElement = textElementFor(element);
 
   if (includeAncestors) {
     let parent = element.parentElement?.closest<HTMLElement>(
@@ -744,10 +795,14 @@ export function targetFromElement(
     source: element.dataset['inspectSource'] ?? '',
     tokens: styleInspection.references,
     typography: typographyValues(
-      element,
-      styleInspection,
+      textElement,
+      textElement === element
+        ? styleInspection
+        : inspectStyles(textElement, options.tokenPrefixes),
       options.tokenPrefixes,
     ),
+    typographySource:
+      textElement === element ? null : describeElement(textElement),
   };
 }
 
