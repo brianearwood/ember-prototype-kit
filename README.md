@@ -27,8 +27,13 @@ pnpm build
 
 Packages are versioned with [Changesets](https://github.com/changesets/changesets).
 Run `pnpm changeset` to describe a change. On `main`, the release workflow opens
-a "Version packages" pull request and publishes to npm when it's merged. It
-needs an `NPM_TOKEN` repository secret.
+a "Version packages" pull request and publishes to npm when it's merged.
+
+Publishing uses [npm trusted publishing](https://docs.npmjs.com/trusted-publishers),
+so no npm token is stored in the repository. Each package must list this
+repository and `release.yml` as a trusted publisher on npmjs.com, with direct
+`npm publish` allowed. Trusted publishers can only be added to a package that
+already exists, so a new package's first version is published manually.
 
 ## License
 
