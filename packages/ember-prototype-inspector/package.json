@@ -1,6 +1,6 @@
 {
   "name": "ember-prototype-inspector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Inspect Mode for Ember prototypes: click any element to see its template source, invocation, component arguments, design tokens, typography and spacing.",
   "keywords": [
     "ember-addon",
