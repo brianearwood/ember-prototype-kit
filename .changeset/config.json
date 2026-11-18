@@ -10,5 +10,6 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["test-app"]
+  "ignore": ["test-app"],
+  "prettier": false
 }
