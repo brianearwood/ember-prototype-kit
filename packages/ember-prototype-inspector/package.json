@@ -1,0 +1,129 @@
+{
+  "name": "ember-prototype-inspector",
+  "version": "0.0.0",
+  "description": "Inspect Mode for Ember prototypes: click any element to see its template source, invocation, component arguments, design tokens, typography and spacing.",
+  "keywords": [
+    "ember-addon",
+    "ember",
+    "inspector",
+    "prototype",
+    "design-system",
+    "helios",
+    "vite",
+    "embroider"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianearwood/ember-prototype-kit.git",
+    "directory": "packages/ember-prototype-inspector"
+  },
+  "license": "MIT",
+  "author": "Brian Earwood",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./template-transform": {
+      "types": "./template-transform.d.cts",
+      "default": "./template-transform.cjs"
+    },
+    "./addon-main.js": "./addon-main.cjs",
+    "./*.css": "./dist/*.css",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "addon-main.cjs",
+    "template-transform.cjs",
+    "template-transform.d.cts",
+    "declarations",
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:publish": "pnpm build && publint run --level error",
+    "lint:types": "ember-tsc --noEmit",
+    "prepare": "rollup --config",
+    "test": "node --test \"tests/node/**/*.test.{cjs,mjs}\""
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.9",
+    "decorator-transforms": "^2.2.2",
+    "ember-modifier": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/plugin-transform-typescript": "^7.25.2",
+    "@babel/runtime": "^7.25.6",
+    "@ember/library-tsconfig": "^1.0.0",
+    "@embroider/addon-dev": "^8.1.0",
+    "@embroider/macros": "^1.20.1",
+    "@eslint/js": "^9.17.0",
+    "@glimmer/component": "^2.0.0",
+    "@glimmer/syntax": "^0.95.0",
+    "@glimmer/tracking": "^1.1.2",
+    "@glint/ember-tsc": "^1.0.3",
+    "@glint/template": "^1.6.1",
+    "@glint/tsserver-plugin": "^2.0.0",
+    "@hashicorp/design-system-components": "^7.1.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-ember-template-compilation": "^4.0.0",
+    "concurrently": "^9.0.1",
+    "ember-source": "~6.12.1",
+    "ember-template-lint": "^7.9.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-ember": "^12.3.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "globals": "^16.1.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-ember-template-tag": "^2.0.4",
+    "publint": "^0.3.16",
+    "rollup": "^4.22.5",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.19.1"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/inspect-mode.js": "./dist/_app_/components/inspect-mode.js",
+      "./modifiers/position-inspect-overlay.js": "./dist/_app_/modifiers/position-inspect-overlay.js"
+    }
+  },
+  "homepage": "https://github.com/brianearwood/ember-prototype-kit/tree/main/packages/ember-prototype-inspector#readme",
+  "bugs": "https://github.com/brianearwood/ember-prototype-kit/issues",
+  "peerDependencies": {
+    "@glimmer/component": ">= 1.1.2",
+    "@glimmer/tracking": ">= 1.1.2",
+    "@hashicorp/design-system-components": "^6.5.0 || ^7.0.0",
+    "ember-source": ">= 5.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 20.19"
+  }
+}

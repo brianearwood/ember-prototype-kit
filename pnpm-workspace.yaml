@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+  - test-app
+
+# Docs: https://pnpm.io/settings
+# Addons should be good citizens: undeclared dependencies must error.
+autoInstallPeers: false
+resolvePeersFromWorkspaceRoot: false
+
+onlyBuiltDependencies:
+  - esbuild

@@ -1,0 +1,363 @@
+/*
+ * Inspect Mode styles. Values use HDS 7 tokens (--hds-*) with HDS 6 token
+ * (--token-*) fallbacks so the overlay renders with either version.
+ */
+
+.inspect-outline {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  border: 2px solid
+    var(--hds-core-color-purple-300, var(--token-color-palette-purple-300));
+}
+
+.inspect-outline-hover {
+  background: color-mix(
+    in srgb,
+    var(--hds-core-color-purple-300, var(--token-color-palette-purple-300)) 8%,
+    transparent
+  );
+}
+
+.inspect-outline-selected {
+  border-width: 3px;
+  box-shadow: 0 0 0 1px
+    var(--hds-surface-color-primary, var(--token-color-surface-primary));
+}
+
+.inspect-hover-label {
+  position: fixed;
+  z-index: 10001;
+  max-width: min(420px, calc(100vw - 8px));
+  overflow: hidden;
+  padding: 3px 6px;
+  color: var(
+    --hds-foreground-color-high-contrast,
+    var(--token-color-foreground-high-contrast)
+  );
+  background: var(
+    --hds-core-color-purple-300,
+    var(--token-color-palette-purple-300)
+  );
+  border-radius: 3px;
+  font-family: var(
+    --hds-typography-font-stack-code,
+    var(--token-typography-font-stack-code)
+  );
+  font-size: var(
+    --hds-typography-code-100-font-size,
+    var(--token-typography-code-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-code-100-line-height,
+    var(--token-typography-code-100-line-height)
+  );
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.inspect-panel {
+  position: fixed;
+  z-index: 10002;
+  top: 0;
+  right: 0;
+  display: grid;
+  width: min(420px, 100vw);
+  height: 100vh;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  color: var(
+    --hds-foreground-color-primary,
+    var(--token-color-foreground-primary)
+  );
+  background: var(
+    --hds-surface-color-primary,
+    var(--token-color-surface-primary)
+  );
+  box-shadow: -8px 0 24px rgb(37 42 46 / 18%);
+}
+
+.inspect-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-bottom: 1px solid
+    var(--hds-border-color-primary, var(--token-color-border-primary));
+}
+
+.inspect-breadcrumbs {
+  display: flex;
+  overflow-x: auto;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-bottom: 1px solid
+    var(--hds-border-color-primary, var(--token-color-border-primary));
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+  font-family: var(
+    --hds-typography-font-stack-code,
+    var(--token-typography-font-stack-code)
+  );
+  font-size: var(
+    --hds-typography-code-100-font-size,
+    var(--token-typography-code-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-code-100-line-height,
+    var(--token-typography-code-100-line-height)
+  );
+  white-space: nowrap;
+}
+
+.inspect-breadcrumbs button {
+  padding: 0;
+  color: var(
+    --hds-foreground-color-action,
+    var(--token-color-foreground-action)
+  );
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.inspect-breadcrumbs button:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid
+    var(
+      --hds-focus-color-action-internal,
+      var(--token-color-focus-action-internal)
+    );
+  outline-offset: 2px;
+}
+
+.inspect-panel-content {
+  overflow-y: auto;
+  padding: 0 20px 24px;
+}
+
+.inspect-section {
+  padding: 20px 0;
+  border-bottom: 1px solid
+    var(--hds-border-color-primary, var(--token-color-border-primary));
+}
+
+.inspect-section:last-child {
+  border-bottom: 0;
+}
+
+.inspect-section h3 {
+  margin: 0 0 12px;
+  font-size: var(
+    --hds-typography-body-200-font-size,
+    var(--token-typography-body-200-font-size)
+  );
+  font-weight: var(
+    --hds-typography-font-weight-semibold,
+    var(--token-typography-font-weight-semibold)
+  );
+  line-height: var(
+    --hds-typography-body-200-line-height,
+    var(--token-typography-body-200-line-height)
+  );
+}
+
+.inspect-section p {
+  margin: 0;
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+}
+
+.inspect-note {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(
+    --hds-surface-color-highlight,
+    var(--token-color-surface-highlight)
+  );
+  border-radius: var(
+    --hds-border-radius-medium,
+    var(--token-border-radius-medium)
+  );
+}
+
+.inspect-note h3 {
+  margin-bottom: 6px;
+}
+
+.inspect-note p {
+  color: var(
+    --hds-foreground-color-primary,
+    var(--token-color-foreground-primary)
+  );
+}
+
+.inspect-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.inspect-section-heading h3 {
+  margin: 0;
+}
+
+.inspect-copy-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.inspect-section > code,
+.inspect-code-list code,
+.inspect-token-list code {
+  overflow-wrap: anywhere;
+  font-family: var(
+    --hds-typography-font-stack-code,
+    var(--token-typography-font-stack-code)
+  );
+  font-size: var(
+    --hds-typography-code-100-font-size,
+    var(--token-typography-code-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-code-100-line-height,
+    var(--token-typography-code-100-line-height)
+  );
+}
+
+.inspect-section pre {
+  max-height: 240px;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  background: var(--hds-surface-color-faint, var(--token-color-surface-faint));
+  border-radius: var(
+    --hds-border-radius-medium,
+    var(--token-border-radius-medium)
+  );
+  white-space: pre-wrap;
+}
+
+.inspect-code-list,
+.inspect-token-list,
+.inspect-property-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inspect-code-list li,
+.inspect-token-list li,
+.inspect-property-list li {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--hds-surface-color-faint, var(--token-color-surface-faint));
+  border-radius: var(
+    --hds-border-radius-medium,
+    var(--token-border-radius-medium)
+  );
+}
+
+.inspect-property-list li {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.inspect-property-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inspect-property-source {
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+  font-size: var(
+    --hds-typography-body-100-font-size,
+    var(--token-typography-body-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-body-100-line-height,
+    var(--token-typography-body-100-line-height)
+  );
+}
+
+.inspect-property-list code {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.inspect-detail-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.inspect-detail-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) minmax(0, 1.5fr);
+  gap: 12px;
+}
+
+.inspect-detail-list dt {
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+}
+
+.inspect-detail-list dd {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  margin: 0;
+}
+
+.inspect-detail-list code {
+  overflow-wrap: anywhere;
+  font-family: var(
+    --hds-typography-font-stack-code,
+    var(--token-typography-font-stack-code)
+  );
+  font-size: var(
+    --hds-typography-code-100-font-size,
+    var(--token-typography-code-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-code-100-line-height,
+    var(--token-typography-code-100-line-height)
+  );
+}
+
+.inspect-token-name {
+  color: var(
+    --hds-foreground-color-action,
+    var(--token-color-foreground-action)
+  );
+}
+
+.inspect-selector {
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+}
+
+.inspect-panel-footer {
+  padding: 12px 20px;
+  color: var(--hds-foreground-color-faint, var(--token-color-foreground-faint));
+  background: var(--hds-surface-color-faint, var(--token-color-surface-faint));
+  border-top: 1px solid
+    var(--hds-border-color-primary, var(--token-color-border-primary));
+  font-size: var(
+    --hds-typography-body-100-font-size,
+    var(--token-typography-body-100-font-size)
+  );
+  line-height: var(
+    --hds-typography-body-100-line-height,
+    var(--token-typography-body-100-line-height)
+  );
+}
